@@ -1,0 +1,22 @@
+# Menggunakan schema version 3.8 dari Docker Compose
+version: '3.8'
+
+# Pendefinisian service
+services:
+  # Service untuk aplikasi item-app
+  item-app:
+    image: ghcr.io/andrewfeb/item-app:v1
+    ports:
+      - "80:8080"  # Melakukan mapping port agar aplikasi dapat diakses dari port 80
+    depends_on:
+      - item-db  # Memastikan item-app hanya berjalan setelah item-db diluncurkan
+    restart: always  # Menerapkan restart policy = always
+
+  # Service untuk database item-db
+  item-db:
+    image: mongo:3
+    volumes:
+      - app-db:/data/db  # Menggunakan volume app-db untuk menyimpan data database dan memasangnya ke directory /data/db di container
+
+volumes:
+  app-db:  # Membuat volume dengan nama app-db
