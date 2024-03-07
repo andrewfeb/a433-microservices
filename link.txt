@@ -1,0 +1,1 @@
+ghcr.io/andrewfeb/item-app:v1
