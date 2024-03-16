@@ -2,7 +2,7 @@
 name: CI for karsajobs
 # Mendefinisikan trigger dari workflow
 on:
-    push: # Men-trigger workflow ketika melakukan push pada branch karsajobs
+  push: # Men-trigger workflow ketika melakukan push pada branch karsajobs
     branches:
       - karsajobs
 # Mengelompokkan semua job yang berjalan di workflow
