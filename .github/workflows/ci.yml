@@ -1,0 +1,27 @@
+# Nama untuk GitHub Action workflow
+name: CI for karsajobs-ui
+# Mendefinisikan trigger dari workflow
+on:
+  push: # Men-trigger workflow ketika melakukan push pada branch karsajobs-ui
+    branches:
+      - karsajobs-ui
+# Mengelompokkan semua job yang berjalan di workflow
+jobs:
+  build: # Mendefinisikan nama job pada workflow dengan nama build
+    runs-on: ubuntu-latest # OS yang digunakan untuk job build
+ 
+    steps:
+      - uses: actions/checkout@v4 # Untuk checkout repository
+      
+      - name: Install and Run Halolint # Step untuk meng-install, set permission execute, dan menjalankan Halolint
+        run: |
+          wget -O halolint https://github.com/hadolint/hadolint/releases/download/v2.12.0/hadolint-Linux-x86_64 
+          chmod +x halolint
+          ./halolint Dockerfile
+      
+      - name: Build and Push Image # Step untuk build dan push image
+        env: # create environment dengan nama GH_TOKEN untuk menyimpan Github Token
+          GH_TOKEN: ${{ secrets.GH_CI_TOKEN }}
+        run: | 
+          export $CR_TOKEN="$GH_TOKEN"
+          sh build_push_image_karsajobs_ui.sh
